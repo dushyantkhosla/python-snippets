@@ -636,7 +636,13 @@ import os
 import sys
 
 if __name__ == '__main__':
-	sys.path.append(os.getcwd())
+	# Set project root to the path where the local module exists
+	PROJECT_ROOT = os.getcwd()
+	
+	# Add it to the system path
+	sys.path.append(PROJECT_ROOT)
+	
+	# Now you can import anything from the local module
 	from foo.bar import baz
 ```
 
