@@ -578,9 +578,43 @@ seq 1 20 | awk 'BEGIN{OFS=","}{print rand(),rand(),rand()}'
 pd.read_csv(StringIO(result_), header=None)
 ```
 
+## Using Python-env with Hydrogen on Atom
+
+```bash
+# create env, activate
+conda create -n py3-env python=3.6 pandas scikit-learn seaborn 
+source activate py3-env
+
+# pass it to ipython
+python -m ipykernel install --user --name py3-env
+```
+
+After you run these two lines and restart Atom, you will be prompted to choose which environment you use when evaluating code using Hydrogen.
 
 
+## Add/Remove Kernels to IPython/Jupyter (also for use with Atom)
 
+```bash
+# see installed kernels
+jupyter kernelspec list
+
+# remove a kernel
+jupyter kernelspec remove <kernel-to-drop>
+```
+
+## Installing packages from a running Notebook
+
+```python
+import sys
+
+# Conda Packages
+!conda install --yes --prefix {sys.prefix} numpy
+
+# pip Packages
+!{sys.executable} -m pip install numpy
+```
+
+Aside // Even when installing packages with pip inside an environment, it is better to write `python -m pip install <package>` than `pip install <package>`.
 
 
 
