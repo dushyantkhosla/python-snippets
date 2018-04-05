@@ -616,6 +616,27 @@ import sys
 
 Aside // Even when installing packages with pip inside an environment, it is better to write `python -m pip install <package>` than `pip install <package>`.
 
+## `.translate()` in Python3
 
+The translate method now requires a table mapping ordinals to be replaced to the replacements. This table could be a dictionary mapping Unicode ordinals (to be replaced) to Unicode ordinals, strings, or None (replacements).
+The following code can be used to remove all punctuation:
 
+```python
+import string
+remove_ = str.maketrans(dict.fromkeys(string.punctuation))
+cleaned_str = dirty_str.translate(remove_)
+```
+
+## `ModuleNotFoundError` when running scripts that use local modules
+
+Python tries to look for modules on the system path and raises this error when it doesn't find it. To solve this, update the path as:
+
+```python
+import os
+import sys
+
+if __name__ == '__main__':
+	sys.path.append(os.getcwd())
+	from foo.bar import baz
+```
 
