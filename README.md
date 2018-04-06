@@ -646,3 +646,37 @@ if __name__ == '__main__':
 	from foo.bar import baz
 ```
 
+
+## Setting Formats for Charts
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+from matplotlib.pylab import rcParams
+
+plt.style.use('seaborn-white')
+sns.set_context("talk")
+
+rcParams['figure.figsize'] = 12, 5 
+rcParams['font.family'] = 'Arial'
+
+font_title = {
+    'size': 18, 
+    'weight': "bold", 
+    'name': 'Georgia'
+}
+
+font_axes = {
+    'size': 14, 
+    'weight': "bold", 
+    'name': 'Georgia'
+}
+
+font_text = {
+    'size': 14, 
+    'weight': 400, 
+    'name': 'Arial'
+}
+
+%pylab inline
+```
