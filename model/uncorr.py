@@ -1,3 +1,7 @@
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
 def find_uncorrelated_variables(X, IMPORTANCES, CORR_THRESHOLD=0.75):
     """
     How it works:
@@ -24,10 +28,6 @@ def find_uncorrelated_variables(X, IMPORTANCES, CORR_THRESHOLD=0.75):
     uncorr: list
         List of Uncorrelated variables for modeling
     """
-    import numpy as np
-    import pandas as pd
-    from pandas import Series, DataFrame
-
     try:
         df_correlations = X.loc[:, IMPORTANCES.index.tolist()].corr()
 
@@ -74,6 +74,5 @@ def find_uncorrelated_variables(X, IMPORTANCES, CORR_THRESHOLD=0.75):
         print("Here are a few examples...\n")
         print(Series(sorted(uncorr)).sample(15).tolist())
         return uncorr
-
     except:
         print("Oops, something went wrong. Please try again.")
