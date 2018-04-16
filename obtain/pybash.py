@@ -26,12 +26,10 @@ def run_on_bash(command):
 def get_file_info(path):
     """
     Returns file size in MB, and number of rows for a file
-
     Parameters
     ----------
     path: str
         Location of the file
-
     Returns
     -------
     result: dict
@@ -39,8 +37,8 @@ def get_file_info(path):
     """
     try:
         if os.path.exists(path):
-            rows_ = int(run_on_bash("wc -l {}".format(file)).split(" ")[0])
-            size_ = os.path.getsize(file)/10**6
+            rows_ = int(run_on_bash("wc -l {}".format(path)).split(" ")[0])
+            size_ = os.path.getsize(path)/10**6
             result = {
                 'rows': rows_,
                 'size': size_
@@ -50,4 +48,5 @@ def get_file_info(path):
             result = None
     except:
         print("An error occurred, please check input and try again.")
+        result = None
     return result
