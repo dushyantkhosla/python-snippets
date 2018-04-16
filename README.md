@@ -732,7 +732,7 @@ du -h -d 1 [PATH]
 - the `-h` switch returns human-readable file sizes (in MB)
 - the `-d` switch limits the depth of directories to 1
 
-## Free RAM in Unix
+## Check available (free) RAM in Unix
 
 ```bash
 free -m
