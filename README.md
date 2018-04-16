@@ -699,6 +699,7 @@ INSIGHT_Y =
 
 
 # Title, Labels
+# Can also use ax.set(title=, ...)
 ax.set_title("{}\n".format(TITLE_), fontdict=font_title);
 ax.set_xlabel("\n {}".format(XLABEL_), fontdict=font_axes)
 ax.set_ylabel("{}\n".format(YLABEL_), fontdict=font_axes)
@@ -721,3 +722,38 @@ ax.text(INSIGHT_X, INSIGHT_Y,
 
 plt.savefig("reports/figures/{}.png".format("-".join(TITLE_.split(" "))), bbox_inches='tight', pad_inches=0.5)
 ```
+
+## Directory Sizes in UNIX
+
+```bash
+du -h -d 1 [PATH]
+```
+
+- the `-h` switch returns human-readable file sizes (in MB)
+- the `-d` switch limits the depth of directories to 1
+
+## Free RAM in Unix
+
+```bash
+free -m
+```
+
+## Run Jupyter in the background
+
+```bash
+jupyter lab --allow-root --ip 0.0.0.0 --port 8008 &> /dev/null &
+
+# get the token
+jupyter notebook list
+```
+
+## Copy a file into a running docker container
+
+```bash
+# get the container id
+docker ps -a
+
+# copy file 
+docker cp [SRC] container_id:[DEST]
+```
+
