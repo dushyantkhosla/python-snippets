@@ -69,16 +69,21 @@ def create_sample(FILE_, SIZE_):
     -------
     None
     """
+    FILE_dest = FILE_.replace(".csv", '_sample.csv')
+    
+    if os.path.exists(FILE_dest):
+        run_on_bash("rm -f {}".format(FILE_dest))
+    
     try:
         if SIZE_ < get_file_info(FILE_).get('rows'):
             print("Selecting a random sample of {} rows".format(SIZE_))
-            run_on_bash("head -n 1 {} > {}".format(FILE_, FILE_.replace(".csv", '_sample.csv')))
-            run_on_bash("cat {} | sed '1d' | shuf -n {} >> {}".format(FILE_, SIZE_, FILE_.replace(".csv", '_sample.csv')))
-            print("Sample file created at {}".format(FILE_.replace(".csv", '_sample.csv')))
+            run_on_bash("head -n 1 {} > {}".format(FILE_, FILE_dest))
+            run_on_bash("cat {} | sed '1d' | shuf -n {} >> {}".format(FILE_, SIZE_, FILE_dest))
+            print("Sample file created at {}".format(FILE_dest))
         else:
             print("Sampling with replacement...")
-            run_on_bash("head -n 1 {} > {}".format(FILE_, FILE_.replace(".csv", '_sample.csv')))
-            run_on_bash("cat {} | sed '1d' | shuf -r -n {} >> {}".format(FILE_, SIZE_, FILE_.replace(".csv", '_sample.csv')))
-            print("Sample file created at {}".format(FILE_.replace(".csv", '_sample.csv')))
+            run_on_bash("head -n 1 {} > {}".format(FILE_, FILE_dest))
+            run_on_bash("cat {} | sed '1d' | shuf -r -n {} >> {}".format(FILE_, SIZE_, FILE_dest))
+            print("Sample file created at {}".format(FILE_dest))
     except:
         print("An error occured. Please check the inputs and try again.")
