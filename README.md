@@ -757,3 +757,8 @@ docker ps -a
 docker cp [SRC] container_id:[DEST]
 ```
 
+## Format floats for print()
+
+```python
+print("Dataset has {:.2f}% duplicate records.".format(100*(df_.shape[0] - df_.drop_duplicates().shape[0])/df_.shape[0]))
+```
