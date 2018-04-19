@@ -3,7 +3,7 @@ import sqlite3
 import pandas as pd
 import numpy as np
 
-from obtain import get_file_info
+from src.obtain import get_file_info
 
 def connect_to_db(path):
     """
