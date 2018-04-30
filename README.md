@@ -762,3 +762,28 @@ docker cp [SRC] container_id:[DEST]
 ```python
 print("Dataset has {:.2f}% duplicate records.".format(100*(df_.shape[0] - df_.drop_duplicates().shape[0])/df_.shape[0]))
 ```
+
+## Parallelize for-loops
+
+```python
+import multiprocessing
+from sklearn.externals.joblib import delayed, Parallel
+
+CPUs = multiprocessing.cpu_count()
+
+result = \
+Parallel(n_jobs=CPUs, verbose=3)(
+    delayed(my_function)
+    (*args, **kwargs) for i in iterable
+)
+
+# example
+# Parallel(n_jobs=2)(
+# 	delayed(sqrt)
+#	(i) for i in [4, 9, 16, 25, 36, 49]
+# )
+```
+
+
+
+
