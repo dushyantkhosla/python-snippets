@@ -44,13 +44,13 @@ def drop_nzv(df_, nzv_threshold=0.95):
      .select_dtypes(include='object')
      .apply(lambda c: c.value_counts(normalize=True).agg(['max', 'idxmax']))
      .T
-     .query("max > {}".formata(nzv_threshold))
+     .query("max > {}".format(nzv_threshold))
      .index
      .tolist()
     )
 
     if len(cols_catg_nzv) >= 1:
-        print("The mode of these columns has a frequency higher than {}. Dropping these. {}"
+        print("The mode of these columns has a frequency higher than {}. Dropping these. \n{}"
               .format(nzv_threshold, cols_catg_nzv))
         df_.drop(cols_catg_nzv, axis=1, inplace=True)
     else:
