@@ -1,4 +1,7 @@
-def clean_zv(df_):
+import numpy as np
+import pandas as pd
+
+def drop_zv(df_):
     """
     Drop columns that have zero-variance
     For Categoricals, if nunique == 1
@@ -31,4 +34,26 @@ def clean_zv(df_):
         df_.drop(cols_zv, axis=1, inplace=True)
     else:
         print("No columns with zero-variance.")
+    return df_
+
+
+def drop_missings(df_, threshold=0.8):
+    """
+    """
+    cols_missings = \
+    (df_
+     .isnull()
+     .mean()
+     .where(lambda i: i > threshold)
+     .dropna()
+     .index
+     .tolist()
+    )
+    
+    if len(cols_missings) >= 1:
+        print("The following columns have more than {:.2f}% missings and will be dropped...\n{}"
+              .format(threshold * 100, cols_missings))
+        df_.drop(cols_missings, inplace=True, axis=1)
+    else:
+        print("No columns have more than {:.2f}% missings.".format(threshold))
     return df_
