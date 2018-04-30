@@ -55,6 +55,7 @@ def drop_nzv(df_, nzv_threshold=0.95):
         df_.drop(cols_catg_nzv, axis=1, inplace=True)
     else:
         print("No categorical columns with near-zero variance found.")
+    return df_
 
 def drop_missings(df_, threshold=0.8):
     """
