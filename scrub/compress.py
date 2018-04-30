@@ -19,13 +19,13 @@ def compress_numeric(COL):
     if numeric, a compressed series
     """
     if 'float' in str(COL.dtype):
-        print("Downcasting {} to float".format(COL))
+        print("Downcasting {} to float".format(COL.name))
         result = pd.to_numeric(COL, downcast='float', errors='ignore')
     elif 'int' in str(COL.dtype):
-        print("Downcasting {} to int".format(COL))
+        print("Downcasting {} to int".format(COL.name))
         result = pd.to_numeric(COL, downcast='integer', errors='ignore')
     else:
-        print("{} is not numeric. Returning as-is".format(COL))
+        print("{} is not numeric. Returning as-is".format(COL.name))
         result = COL
     return result
 
