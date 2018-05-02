@@ -1,5 +1,7 @@
 import pandas as pd
 
+from ..utils import time_my_func
+
 def make_dummies(ser, DROP_ONE=True):
     """
     Create dummies for different levels of a clipped categorical
@@ -29,7 +31,7 @@ def make_dummies(ser, DROP_ONE=True):
 
     return df_dum
 
-
+@time_my_func
 def create_dummified_df(df, drop_one=True):
     """
     For each (clipped) categorical column

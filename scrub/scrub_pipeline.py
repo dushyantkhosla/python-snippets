@@ -8,6 +8,10 @@ import pandas as pd
 from pandas import DataFrame, Series
 import seaborn as sns
 
+if __name__ == '__main__':
+    sys.path.append(os.getcwd())
+    from src.utils import time_my_func
+
 # -----------------------------------
 # Define helper objects
 # -----------------------------------
@@ -41,7 +45,7 @@ def scrub_col_Z():
 # -----------------------------------
 # Define processing functions
 # -----------------------------------
-
+@time_my_func
 def engineer_features(df):
     """
     Contains code for

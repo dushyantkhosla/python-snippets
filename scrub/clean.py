@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+from ..utils import time_my_func
+
 def drop_zv(df_):
     """
     Drop columns that have zero-variance
@@ -82,7 +84,7 @@ def drop_missings(df_, NA_threshold=0.8):
         print("No columns have more than {:.2f}% missings.".format(NA_threshold))
     return df_
 
-
+@time_my_func
 def remove_zv_missings(df, NA_threshold=0.85, nzv_threshold=0.95):
     """
     Clean passed dataset by removing columns with

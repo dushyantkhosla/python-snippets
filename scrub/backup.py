@@ -1,7 +1,9 @@
 import pandas as pd
 from pandas import Series, DataFrame
-from src.scrub import compress_numeric
+from ..scrub import compress_numeric
+from ..utils import time_my_func
 
+@time_my_func
 def backup_df(df, path_clean, path_db):
     """
     Writes a dataframe to disk after
