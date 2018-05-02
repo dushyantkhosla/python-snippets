@@ -54,26 +54,26 @@ def get_file_info(path):
 
 def create_sample(FILE_, SIZE_):
     """
-    Use the UNIX shuf utility to create 
+    Use the UNIX shuf utility to create
     a file with a random selection of rows from a large file
-    
+
     Parameters
     ----------
     FILE_: str
         The location of the source (large) file
-        
+
     SIZE_: int
         The number of rows desired in the sample
-        
+
     Returns
     -------
     None
     """
     FILE_dest = FILE_.replace(".csv", '_sample.csv')
-    
+
     if os.path.exists(FILE_dest):
         run_on_bash("rm -f {}".format(FILE_dest))
-    
+
     try:
         if SIZE_ < get_file_info(FILE_).get('rows'):
             print("Selecting a random sample of {} rows".format(SIZE_))

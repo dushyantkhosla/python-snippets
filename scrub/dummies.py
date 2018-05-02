@@ -16,16 +16,47 @@ def make_dummies(ser, DROP_ONE=True):
         pandas.DataFrame
 
     """
-
     if ser.nunique() > 10:
-        print("Categorical has too many levels, consider clipping")
+        print("Categorical has too many levels, clip first.")
         df_dum = None
     else:
-        df_dum = pd.get_dummies(ser, prefix=ser.name)
+        df_dum = pd.get_dummies(ser, prefix='flag_' + ser.name)
         if DROP_ONE:
             other_col = [c for c in df_dum if 'Other' in c]
             to_drop_ = other_col if other_col else df_dum.mean().idxmin()
-            print("Dropping {}\n".format(to_drop_))
+            print("Dropping {}".format(to_drop_))
             df_dum.drop(to_drop_, axis=1, inplace=True)
 
     return df_dum
+
+
+def create_dummified_df(df, drop_one=True):
+    """
+    For each (clipped) categorical column
+    * Create dummmy DataFrame
+    * Concat to input df
+    * Drop the categorical
+
+    Returns
+    -------
+        Passed df with flag_* columns replacing categoricals
+    """
+    df_ = df.copy()
+
+    cols_dummies = \
+    (df_
+    .select_dtypes(include=object)
+    .columns
+    .tolist())
+    print("Creating dummies for \n{}".format(cols_dummies))
+
+    list_dummies_df = \
+    [make_dummies(df_[COL], DROP_ONE=drop_one) for COL in cols_dummies]
+
+    df_2 = \
+    pd.concat([
+        df_.drop(cols_dummies, axis=1),
+        pd.concat(list_dummies_df, axis=1)
+    ], axis=1)
+
+    return df_2
