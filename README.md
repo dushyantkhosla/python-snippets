@@ -784,6 +784,12 @@ Parallel(n_jobs=CPUs, verbose=3)(
 # )
 ```
 
+## Download a Youtube Playlist as MP3 files
 
+```bash
+# brew install ffmpeg
+# brew link ffmepg
+youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" [youtube-playlist-tag]
+```
 
 
