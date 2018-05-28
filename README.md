@@ -662,19 +662,19 @@ rcParams['font.family'] = 'sans-serif'
 
 font_title = {
     'size': 18, 
-    'weight': 600, 
+    'weight': 200, 
     'name': 'Georgia'
 }
 
 font_axes = {
     'size': 16, 
-    'weight': 500, 
-    'name': 'Georgia'
+    'weight': 200, 
+    'name': 'Verdana'
 }
 
 font_text = {
     'size': 14, 
-    'weight': 300, 
+    'weight': 200, 
     'name': 'Verdana'
 }
 
@@ -713,6 +713,7 @@ ax.grid(True, linestyle=":", alpha=0.6)
 ax.spines['top'].set_visible(False)
 ax.spines['left'].set_visible(False)
 ax.spines['right'].set_visible(False)
+ax.legend(bbox_to_anchor=(1.05, 1))
 
 ax.text(INSIGHT_X, INSIGHT_Y, 
         """Almost half the people on the ship were \nin the 20-29 age group.
