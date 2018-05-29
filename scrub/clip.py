@@ -5,24 +5,19 @@ def clip_categorical(ser, MIN_LEVELS=5, MIN_FREQ=0.05, COVERAGE=0.95):
     """
     Manage Categoricals with too many levels
     If the categorical has only 2 levels, it will be returned as-is
-
     Parameters
     ----------
     SR: pandas.Series
         the input Categorical series with >= MIN_LEVELS
-
     MIN_FREQ: float
         Levels with at least MIN_FREQ %cases will survive
-
     COVERAGE: float
         Levels that make up COVERAGE% of the data will survive
-
     Returns
     -------
     A pandas.Series object with
     retained labels for levels that account for COVERAGE% of the data
     replaced labels (with 'Other') for rare levels
-
     """
     sr = ser.copy()
     if sr.nunique() >= MIN_LEVELS:

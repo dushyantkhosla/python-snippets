@@ -3,6 +3,17 @@ import pandas as pd
 
 from ..utils import time_my_func
 
+def drop_unnamed(df):
+    """
+    """
+    cols_unnamed = [x for x in df.columns if x.lower().startswith('unnamed')]
+
+    if len(cols_unnamed) >= 1:
+        df.drop(cols_unnamed, axis=1, inplace=True)
+    else:
+        pass
+    return df
+
 def drop_zv(df_):
     """
     Drop columns that have zero-variance
@@ -110,6 +121,7 @@ def remove_zv_missings(df, NA_threshold=0.85, nzv_threshold=0.95):
     df_ = \
     (df
      .copy()
+     .pipe(drop_unnamed)
      .pipe(drop_missings, NA_threshold=NA_threshold)
      .pipe(drop_zv)
      .pipe(drop_nzv, nzv_threshold=nzv_threshold)

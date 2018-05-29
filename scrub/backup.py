@@ -1,15 +1,17 @@
 import pandas as pd
 from pandas import Series, DataFrame
-from ..scrub import compress_numeric
+
+from .compress import compress_numeric
+from .clip import clip_categorical
 from ..utils import time_my_func
 
 @time_my_func
-def backup_df(df, path_clean, path_db):
+def backup_df(df, path_clean):
     """
     Writes a dataframe to disk after
-    * cleaning dates
-    * imputing categoricals
-    * compressing numerics
+     cleaning dates
+     imputing categoricals
+     compressing numerics
     """
     print("Fixing dates...")
     date_cols = df.columns.map(lambda i: i if 'date' in i else None).dropna().tolist()

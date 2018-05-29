@@ -1,8 +1,7 @@
 import numpy  as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-
-from scrub import clip_categorical
+from .clip import clip_categorical
 
 def compress_numeric(COL):
     """
