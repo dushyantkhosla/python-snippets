@@ -793,4 +793,11 @@ Parallel(n_jobs=CPUs, verbose=3)(
 youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" [youtube-playlist-tag]
 ```
 
+## Suppress Warnings
+
+```python
+import warnings
+warnings.simplefilter('ignore', category=FutureWarning)
+```
+
 
