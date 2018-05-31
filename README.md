@@ -748,7 +748,7 @@ jupyter lab --allow-root --ip 0.0.0.0 --port 8008 &> /dev/null &
 jupyter notebook list
 
 # stop a kernel (using the port number)
-jupyter notebook stop --NbserverStopApp.port=8890
+jupyter notebook stop --NbserverStopApp.port=8008
 ```
 
 ## Copy a file into a running docker container
