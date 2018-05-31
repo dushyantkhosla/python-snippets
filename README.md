@@ -800,4 +800,19 @@ import warnings
 warnings.simplefilter('ignore', category=FutureWarning)
 ```
 
+## Read SPSS files (.sav) into Python via R
+
+```python
+# Dependencies
+!conda install -y -c r rpy2 r-foreign
+
+sav_file = "path/to/sav"
+csv_file = "path/to/csv"
+
+from rpy2.robjects.packages import importr
+pkg_foreign = importr('foreign')
+
+r_df = pkg_foreign.read_spss(sav_file, to_data_frame=True, reencode=True)
+r_df.to_csvfile(csv_file)
+```
 
