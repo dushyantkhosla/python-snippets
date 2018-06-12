@@ -819,3 +819,18 @@ r_df = pkg_foreign.read_spss(sav_file, to_data_frame=True, reencode=True)
 r_df.to_csvfile(csv_file)
 ```
 
+## Round integers to nearest 10 (useful with Binning) with `round(x, -1)`
+
+```python
+numeric_col = 'foo'
+num_bins = 5
+LL = 0
+UL = round(df.loc[: 'numeric_col'].max(), -1)
+
+
+BINS = np.linspace(LL, UL, num_bins)
+LBLS = [f"{str(i).zfill(2)}-to-{str(j).zfill(2)}" for i, j in zip(BINS[:-1], BINS[1:])]
+
+srs_binned = df.loc[:, numeric_col].pipe(pd.cut, bins=BINS, labels=LBLS)
+srs_binned.value_counts(normalize=True)
+```
