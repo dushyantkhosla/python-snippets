@@ -858,6 +858,9 @@ def format_plot(ax):
     Titles and axes labels 
     - should be set before calling this function
     - here they will be spaced away from the chart
+    
+    Text, annotations etc. should also be set before 
+    See: ax.annotate, ax.text, ax.vlines, ax.hlines ...
     """
     font_title = {
         'size': 20, 
