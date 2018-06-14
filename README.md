@@ -884,3 +884,9 @@ def format_plot(ax):
     ax.set_xlabel(f"\n{ax.get_xlabel().title()} ➞", fontdict=font_axes)
     ax.set_ylabel(f"{ax.get_ylabel().title()} ➞\n", fontdict=font_axes)
 ```    
+
+## Store pwd as hidden file, get it on clipboard
+
+```bash
+cat ~/.pwds/.gw | tr -d '\n' | pbcopy
+```
