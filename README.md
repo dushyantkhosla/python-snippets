@@ -837,6 +837,20 @@ srs_binned.value_counts(normalize=True)
 ## Chart Formatting v1.0
 
 ```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+import altair as alt
+
+from ipywidgets import interactive, Dropdown
+
+sns.set_style("whitegrid")
+sns.set_context("talk")
+
+plt.rcParams['figure.figsize'] = 12, 5 
+plt.rcParams['font.family'] = 'monospace'
+
+%matplotlib inline
+
 def format_plot(ax):
     """
     Modify the font dicts for the design language you're following
@@ -844,8 +858,6 @@ def format_plot(ax):
     Titles and axes labels 
     - should be set before calling this function
     - here they will be spaced away from the chart
-    
-    Also see: sns.set()
     """
     font_title = {
         'size': 20, 
