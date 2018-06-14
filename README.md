@@ -834,3 +834,38 @@ LBLS = [f"{str(i).zfill(2)}-to-{str(j).zfill(2)}" for i, j in zip(BINS[:-1], BIN
 srs_binned = df.loc[:, numeric_col].pipe(pd.cut, bins=BINS, labels=LBLS)
 srs_binned.value_counts(normalize=True)
 ```
+## Chart Formatting v1.0
+
+```python
+def format_plot(ax):
+    """
+    Modify the font dicts for the design language you're following
+    
+    Titles and axes labels 
+    - should be set before calling this function
+    - here they will be spaced away from the chart
+    
+    Also see: sns.set()
+    """
+    font_title = {
+        'size': 20, 
+        'weight': 600, 
+        'name': 'monospace'
+    }
+
+    font_axes = {
+        'size': 14, 
+        'weight': 'bold', 
+        'name': 'monospace'
+    }
+
+    ax.grid(True, linestyle=":", alpha=0.6)
+    ax.spines['top'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.legend(bbox_to_anchor=(1.1, 1))
+    
+    ax.set_title(f"\n\n{ax.get_title().title()}\n", fontdict=font_title)
+    ax.set_xlabel(f"\n{ax.get_xlabel().title()} ➞", fontdict=font_axes)
+    ax.set_ylabel(f"{ax.get_ylabel().title()} ➞\n", fontdict=font_axes)
+```    
