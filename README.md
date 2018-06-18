@@ -891,3 +891,10 @@ def format_plot(ax):
 ```bash
 cat ~/.pwds/.gw | tr -d '\n' | pbcopy
 ```
+
+## Make seaborn `annot` text larger
+
+```python
+sns.set(font_scale=1)
+sns.heatmap(df_, annot=True)
+```
