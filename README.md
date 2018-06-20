@@ -875,9 +875,8 @@ def format_plot(ax):
     }
 
     ax.grid(True, linestyle=":", alpha=0.6)
-    ax.spines['top'].set_visible(False)
-    ax.spines['left'].set_visible(False)
-    ax.spines['right'].set_visible(False)
+    sns.despine(ax=ax, left=True)
+
     if ax.get_legend():
         ax.legend(bbox_to_anchor=(1.1, 1))
     
