@@ -1,7 +1,3 @@
-[TOC]
-
----
-
 # Python Snippets 
 
 
@@ -896,4 +892,9 @@ cat ~/.pwds/.gw | tr -d '\n' | pbcopy
 ```python
 sns.set(font_scale=1)
 sns.heatmap(df_, annot=True)
+```
+## Limit output to a few rows when printing a DataFrame
+
+```python
+pd.set_option("display.max_rows", 20)
 ```
