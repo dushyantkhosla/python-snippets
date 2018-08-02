@@ -881,6 +881,13 @@ def format_plot(ax):
     ax.set_ylabel(f"{ax.get_ylabel().title()} ➞\n", fontdict=font_axes)
 ```    
 
+## Change number format for plot axes
+
+```
+# Get thousands separator 
+ax.set_yticklabels(['{:,}'.format(int(x)) for x in ax.get_yticks().tolist()])
+```
+
 ## Store pwd as hidden file, get it on clipboard
 
 ```bash
