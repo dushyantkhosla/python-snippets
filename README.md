@@ -905,3 +905,24 @@ sns.heatmap(df_, annot=True)
 ```python
 pd.set_option("display.max_rows", 20)
 ```
+
+## Handy Aliases
+
+- Put these in your `.bashrc` or `.zshrc`
+
+```bash
+alias cel='conda env list'
+
+alias cact='function _f0(){conda activate $1;};_f0'
+# usage: cact dataviz
+
+alias cdeac='conda deactivate'
+
+alias jlab='function _f1(){jupyter lab --no-browser --port=$1 &> /dev/null & ;};_f1'
+# usage: jlab 8800
+
+alias jnl='jupyter notebook list'
+
+alias jstop='function _f2(){jupyter notebook stop --NbserverStopApp.port=$1;};_f2'
+# usage jstop 8800
+```
