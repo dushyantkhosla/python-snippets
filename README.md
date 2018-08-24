@@ -933,3 +933,11 @@ alias jstop='function _f2(){jupyter notebook stop --NbserverStopApp.port=$1;};_f
 find . -name '*.pyc' -delete
 find . -name '__pycache__' -delete
 ```
+
+## Using Hydrogen with Atom to run Python code in-line like Jupyter
+
+```
+conda activate my-env
+conda install ipykernel
+python -m ipykernel install --user
+```
