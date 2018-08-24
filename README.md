@@ -926,3 +926,10 @@ alias jnl='jupyter notebook list'
 alias jstop='function _f2(){jupyter notebook stop --NbserverStopApp.port=$1;};_f2'
 # usage jstop 8800
 ```
+
+## Remove redundant (and annoying) files
+
+```bash
+find . -name '*.pyc' -delete
+find . -name '__pycache__' -delete
+```
