@@ -985,6 +985,7 @@ set(list_colors) # will ignore dups
 - In a nutshell, fills placeholders with text
 - Templates are text files with `{{a-variable}}`
 - We fill or `render` the template by passing data to `variables`
+- Basic Usage
 
 ```bash
 mkdir templates
@@ -998,4 +999,32 @@ fsl = FileSystemLoader('./templates')
 env = Environment(loader=fsl)
 template_1 = env.get_template('namaste.txt')
 template_1.render(name='Dushyant')
+```
+
+- Conditionals and loops are created in templates with `{% ... %}`
+
+```
+# Conditionals
+{% if x > 0 %}
+	X is positive
+{% else %}
+	X is Negative
+{% endif %}
+
+# Looping
+{% for color in colors %}
+	{{ color }}
+{% endfor %}	
+```
+
+- Templates can be combined
+	- If you have `header.html, body.html`, you can call them in an `index.html` with `include`
+
+```
+<HTML>
+	{% include 'header.html' %}
+	<BODY>
+	{% include 'body.html' %}
+	</BODY>
+</HTML>
 ```
