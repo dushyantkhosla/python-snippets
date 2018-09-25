@@ -6,13 +6,23 @@ import pandas as pd
 from pandas import DataFrame, Series
 import seaborn as sns
 
-if __name__ == '__main__':
-    sys.path.append(os.getcwd())
-    from src.utils import time_my_func
+from src.utils import time_my_func
+from src.obtain import run_on_bash, get_file_info
+from src.obtain import connect_to_db, load_file_to_db, print_table_names
+from src.scrub import import_filter_df, get_target_df
+from src.scrub import drop_zv, drop_nzv, drop_missings, remove_zv_missings
+from src.scrub import make_dummies, create_dummified_df
+from src.scrub import compress_numeric, clip_categorical
+from src.scrub import backup_df
+
+path_raw = "data/raw/gravity_contact_20180406.csv"
+path_clean = "data/raw/clean_contact.csv"
+path_clean_db = "data/interim/clean.db"
 
 # --- Declare Helper Objects ---
 
 dict_replace_1 = {}
+replace_spaces = lambda i: "_".join([x.lower().strip() for x in i.split()])
 
 def get_x_from_y():
     """
@@ -25,8 +35,6 @@ def get_x_from_y():
 def engineer_features(df):
     """
     """
-    replace_spaces = lambda i: "_".join([x.lower().strip() for x in i.split()])
-
     print("Scrubbing Cell Description")
     num_items_cellDescr = df['CELL_DESCRIPTION'].map(lambda i: len(str(i).split("|")))
     indexes_to_drop = \
@@ -194,20 +202,6 @@ def get_aggregated_df(df, aggfunc):
 
 
 if __name__ == '__main__':
-    sys.path.append(os.getcwd())
-
-    from src.obtain import run_on_bash, get_file_info
-    from src.obtain import connect_to_db, load_file_to_db, print_table_names
-    from src.scrub import import_filter_df, get_target_df
-    from src.scrub import drop_zv, drop_nzv, drop_missings, remove_zv_missings
-    from src.scrub import make_dummies, create_dummified_df
-    from src.scrub import compress_numeric, clip_categorical
-    from src.scrub import backup_df
-
-    path_raw = "data/raw/gravity_contact_20180406.csv"
-    path_clean = "data/raw/clean_contact.csv"
-    path_clean_db = "data/interim/clean.db"
-
     errors_aggregate_df = []
     df_aggregated = (import_filter_df(path_raw)
                      .pipe(remove_zv_missings)
