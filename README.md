@@ -994,11 +994,15 @@ echo 'Namaste, {{name}}!' > namaste.txt
 ```
 
 ```python
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 fsl = FileSystemLoader('./templates')
 env = Environment(loader=fsl)
 template_1 = env.get_template('namaste.txt')
 template_1.render(name='Dushyant')
+
+# or 
+template_2 = Template("Hello {{name}}!")
+template_2.render(name='Dushyant')
 ```
 
 - Conditionals and loops are created in templates with `{% ... %}`
