@@ -941,3 +941,61 @@ conda activate my-env
 conda install ipykernel
 python -m ipykernel install --user
 ```
+
+## Using DataClasses
+
+- code generator that removes boilerplate from Class definitions
+- essentially still a flexible data and methods holder
+- use the `@dataclass` decorator with params
+- by default, it is 
+	- mutable (and hence unhashable)
+	- unordered
+	- but, these defaults can be overridden using the `frozen` and `order` params
+
+```python
+# Example 1
+from data class import dataclass, asdict, astuple, replace, field
+@dataclass
+class Color:
+	hue: int
+	saturation: float
+	lightness: float = 0.5
+	
+c = Color(120, 4.2)
+c
+c.lightness
+replace(c, hue=120)
+asdict(c)
+
+# Example 2
+@dataclass(frozen=True, order=True)
+class Color:
+	hue: int
+	saturation: float
+	lightness: float = 0.5
+
+list_colors = [Color(10, 2.0), Color(1, 90.5), Color(120, 45.2), Color(45, 77.8), Color(45, 77.8)]
+sorted(list_colors)
+set(list_colors) # will ignore dups
+```
+
+## Using Jinja2 Templates
+
+- Templating language
+- In a nutshell, fills placeholders with text
+- Templates are text files with `{{a-variable}}`
+- We fill or `render` the template by passing data to `variables`
+
+```bash
+mkdir templates
+touch templates/namaste.txt
+echo 'Namaste, {{name}}!' > namaste.txt
+```
+
+```python
+from jinja2 import Environment, FileSystemLoader
+fsl = FileSystemLoader('./templates')
+env = Environment(loader=fsl)
+template_1 = env.get_template('namaste.txt')
+template_1.render(name='Dushyant')
+```
