@@ -1032,3 +1032,22 @@ template_2.render(name='Dushyant')
 	</BODY>
 </HTML>
 ```
+
+## Create combinations with `itertools`
+
+- useful to generate search grids or test-cases 
+
+```python
+from itertools import product, permutations, combinations
+
+for t in product('ABC', 'DE', 'xyz'):
+	print(t)
+	
+# Generate nPm
+for t in permutations('HELLO', 2):
+	print(t)
+
+# Generate nCm
+for t in combinations('HELLO', 2):
+	print(t)
+```
