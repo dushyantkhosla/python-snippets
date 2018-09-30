@@ -1051,3 +1051,17 @@ for t in permutations('HELLO', 2):
 for t in combinations('HELLO', 2):
 	print(t)
 ```
+
+
+## Writing robust Python code
+
+- Write docstrings with examples, check with `doctest`
+- Detect common errors with `pyflakes`
+- Add type checking with `mypy`
+- Run unit tests with `pytest` and `hypothesis`
+
+```bash
+python3 -m pyflakes my-module.py
+mypy my-module.py
+pytest my-module.py
+```
