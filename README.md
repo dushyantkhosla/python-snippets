@@ -1065,3 +1065,11 @@ python3 -m pyflakes my-module.py
 mypy my-module.py
 pytest my-module.py
 ```
+
+## Convert 1D numpy array to 2D
+
+```python
+x = np.linspace(start=0, stop=1, num=10**3)
+X = x[:, np.newaxis]
+print(x.ndim, X.ndim)
+```
