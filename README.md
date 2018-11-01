@@ -1073,3 +1073,25 @@ x = np.linspace(start=0, stop=1, num=10**3)
 X = x[:, np.newaxis]
 print(x.ndim, X.ndim)
 ```
+
+## Jupyter Widgets: Passing fixed arguments to function under `interact`
+
+- An interactive viz. is created as `interact(func, par_1=widget_1, ...)`
+- Here, func usually takes values from the widgets like Dropdowns or Sliders
+- Sometimes, we want to pass values not taken from widgets (ex. a dataframe or a sqlite connection)
+- Then, we use the `fixed` pseudo-widget
+
+```python
+from ipywidgets import Dropdown, Slider, interactive, fixed
+
+def f(x, y, kwargs):
+    '''
+    '''
+    result = ... kwargs['a'] ...
+    return result
+    
+interactive(f,
+	    x=Dropdown(...),
+	    y=Slider(...),
+	    kwargs=fixed({'a': a, 'b': b}))
+```
