@@ -1009,8 +1009,7 @@ template_1.render(name='Dushyant')
 template_2 = Template("Hello {{name}}!")
 template_2.render(name='Dushyant')
 ```
-
-- Conditionals and loops are created in templates with ```{% ... %}```
+- Conditionals and Loops
 
 ```
 # Conditionals
