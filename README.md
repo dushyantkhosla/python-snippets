@@ -927,6 +927,11 @@ alias jstop='function _f2(){jupyter notebook stop --NbserverStopApp.port=$1;};_f
 # usage jstop 8800
 ```
 
+## Setting up ZSH + iTerm2
+
+- Follow https://medium.freecodecamp.org/jazz-up-your-zsh-terminal-in-seven-steps-a-visual-guide-e81a8fd59a38
+- Customize Agnoster https://github.com/agnoster/agnoster-zsh-theme
+
 ## Remove redundant (and annoying) files
 
 ```bash
