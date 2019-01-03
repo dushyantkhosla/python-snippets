@@ -1108,3 +1108,14 @@ scp -r path-to-source path-to-destination
 ```
 
 - path to a remote directory will be built as USERNAME@REMOTE-MACHINE-IP:path/to/directory
+
+## Exiting a program during execution
+
+```python
+import os
+import sys
+
+if not os.path.exists('config.ini'):
+    print('Could not find config file.\nPlease ensure config.ini exists and try again.')
+    sys.exit()
+```
