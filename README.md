@@ -1100,3 +1100,11 @@ interactive(f,
 	    y=Slider(...),
 	    kwargs=fixed({'a': a, 'b': b}))
 ```
+
+## Using `scp` to transfer data between local machine and remote
+
+```bash
+scp -r path-to-source path-to-destination
+```
+
+- path to a remote directory will be built as USERNAME@REMOTE-MACHINE-IP:path/to/directory
