@@ -931,6 +931,7 @@ alias jstop='function _f2(){jupyter notebook stop --NbserverStopApp.port=$1;};_f
 
 - Follow https://medium.freecodecamp.org/jazz-up-your-zsh-terminal-in-seven-steps-a-visual-guide-e81a8fd59a38
 - Customize Agnoster https://github.com/agnoster/agnoster-zsh-theme
+- Remove machine name from prompt https://stackoverflow.com/questions/28491458/zsh-agnoster-theme-showing-machine-name
 
 ## Remove redundant (and annoying) files
 
