@@ -1119,3 +1119,12 @@ if not os.path.exists('config.ini'):
     print('Could not find config file.\nPlease ensure config.ini exists and try again.')
     sys.exit()
 ```
+
+## Find files and perform actions
+
+- Use the bash `find` command
+- Syntax: `find DIRECTORY -type xxx -size xxx -iname "xxx" -exec xxx {} \;`
+
+```bash
+find ./src -type f -name "*.pyc" -exec rm -f {} \; 
+```
