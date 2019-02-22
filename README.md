@@ -1128,3 +1128,12 @@ if not os.path.exists('config.ini'):
 ```bash
 find ./src -type f -name "*.pyc" -exec rm -f {} \; 
 ```
+
+## Start Jupyter Lab, direct output to file
+
+- works for any command (syntax: `nohup <command> &`)
+- output is redirected to a file `nohup.out`
+
+```bash
+nohup jupyter lab --no-browser --allow-root --ip "*" --port 1508 &
+```
