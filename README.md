@@ -1137,3 +1137,12 @@ find ./src -type f -name "*.pyc" -exec rm -f {} \;
 ```bash
 nohup jupyter lab --no-browser --allow-root --ip "*" --port 1508 &
 ```
+
+## Regex over pd.Series
+
+- The following pattern will keep only alphabets and numbers
+- Removes all other/special characters
+
+```python
+pd.Series(['abcd-1234-##$', 'wxyz-7890-@@&']).replace('[^a-z|0-9]', '', regex=True)
+```
