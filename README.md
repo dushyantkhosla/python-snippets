@@ -1146,3 +1146,9 @@ nohup jupyter lab --no-browser --allow-root --ip "*" --port 1508 &
 ```python
 pd.Series(['abcd-1234-##$', 'wxyz-7890-@@&']).replace('[^a-z|0-9]', '', regex=True)
 ```
+
+## Flatten column names in a Pandas MultiIndex
+
+```python
+df.columns = ['_'.join(col).strip() for col in df.columns.values]
+```
