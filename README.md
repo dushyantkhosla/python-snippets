@@ -1152,3 +1152,15 @@ pd.Series(['abcd-1234-##$', 'wxyz-7890-@@&']).replace('[^a-z|0-9]', '', regex=Tr
 ```python
 df.columns = ['_'.join(col).strip() for col in df.columns.values]
 ```
+
+## Multiprocessing
+
+```python
+import multiprocessing
+
+def my_func():
+    pass
+    
+pool = multiprocessing.Pool()
+pool.map(my_func, list_of_inputs)
+```
