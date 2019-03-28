@@ -1164,3 +1164,22 @@ def my_func():
 pool = multiprocessing.Pool()
 pool.map(my_func, list_of_inputs)
 ```
+
+## Run a function over a Pandas GroupBy object in parallel using Multiprocessing
+
+```python
+from multiprocessing import Pool
+
+def aggregate():
+    '''
+    Reduces a GroupBy group into a row
+    '''
+    pass
+    
+with Pool() as pool:
+    list_result = \
+    pool.map(func=aggregate,
+             iterable=[x[1] for x in list(df.groupby("KEY"))])
+
+df_aggregated = pd.concat(list_result, axis=1).T
+```
