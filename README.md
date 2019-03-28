@@ -1176,6 +1176,9 @@ def aggregate():
     '''
     pass
     
+## list(df.groupby('KEY')) returns a list of tuples like (key, group)
+## pool.map() --> returns a list 
+    
 with Pool() as pool:
     list_result = \
     pool.map(func=aggregate,
