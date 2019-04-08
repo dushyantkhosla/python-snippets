@@ -1189,7 +1189,9 @@ df_aggregated = pd.concat(list_result, axis=1).T
 
 ## Postgres + Pandas
 
-```python
+- First, from the Terminal
+
+```bash
 # Get image
 docker pull postgres
 
@@ -1205,7 +1207,10 @@ docker run --rm -d --name psql \
 # Requirements
 pip install pandas==0.24.2
 pip install psycopg2-binary
+```
+- Then, in Python 
 
+```python
 # Connect to the DB
 from sqlalchemy import create_engine
 engine = create_engine("postgresql://postgres:pg_docker_01@localhost:5432/postgres")
@@ -1222,6 +1227,34 @@ df.to_sql(
 )
 
 # PS: This should work for DataFrames under 10M rows.
-# For larger dataframes, try loading incrementally
-# See - https://stackoverflow.com/questions/23103962/how-to-write-dataframe-to-postgres-table (Pandas 0.24+ Solution)
+# For larger dataframes (More than 10**7 rows,) try:
+
+def psql_insert_copy(table, conn, keys, data_iter):
+    """
+    """
+    dbapi_conn = conn.connection
+    with dbapi_conn.cursor() as cur:
+        s_buf = StringIO()
+        writer = csv.writer(s_buf)
+        writer.writerows(data_iter)
+        s_buf.seek(0)
+
+        columns = ', '.join('"{}"'.format(k) for k in keys)
+        if table.schema:
+            table_name = '{}.{}'.format(table.schema, table.name)
+        else:
+            table_name = table.name
+
+        sql = f'COPY {table_name} ({columns}) FROM STDIN WITH CSV'
+        cur.copy_expert(sql=sql, file=s_buf)
+
+df.to_sql(
+    'table_name',
+    con=engine, 
+    if_exists='replace', 
+    index=False, 
+    method=psql_insert_copy,
+    chunksize=10**6)
+)
+# This took ~10mins to load a 3GB+ file (10**8 rows) into the DB.
 ```
