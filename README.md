@@ -1186,3 +1186,42 @@ with Pool() as pool:
 
 df_aggregated = pd.concat(list_result, axis=1).T
 ```
+
+## Postgres + Pandas
+
+```python
+# Get image
+docker pull postgres
+
+# Start a container
+# see: https://docs.docker.com/samples/library/postgres/
+# options: POSTGRES_USER (default: postgres), POSTGRES_DB (default: postgres), PGDATA (to defined a directory for database files)
+docker run --rm -d --name psql \
+                   -e POSTGRES_PASSWORD=pg_docker_01 \
+		   -p 5432:5432 \
+		   -v $(PWD):/var/lib/postgresql/data \
+		   postgres
+
+# Requirements
+pip install pandas==0.24.2
+pip install psycopg2-binary
+
+# Connect to the DB
+from sqlalchemy import create_engine
+engine = create_engine("postgresql://postgres:pg_docker_01@localhost:5432/postgres")
+
+# Read data from text files, load into DB
+df = pd.read_csv(...)
+df.to_sql(
+    'table_name', 
+    con=engine, 
+    if_exists='replace', 
+    index=False, 
+    method='multi', 
+    chunksize=10**5
+)
+
+# PS: This should work for DataFrames under 10M rows.
+# For larger dataframes, try loading incrementally
+# See - https://stackoverflow.com/questions/23103962/how-to-write-dataframe-to-postgres-table (Pandas 0.24+ Solution)
+```
