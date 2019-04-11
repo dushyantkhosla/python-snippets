@@ -1266,13 +1266,18 @@ def psql_insert_copy(table, conn, keys, data_iter):
         sql = f'COPY {table_name} ({columns}) FROM STDIN WITH CSV'
         cur.copy_expert(sql=sql, file=s_buf)
 
-df.to_sql(
+(df
+ .rename(columns=lambda x: x.lower())
+ .to_sql(
     'table_name',
     con=engine, 
     if_exists='replace', 
     index=False, 
     method=psql_insert_copy,
-    chunksize=10**6)
-)
+    chunksize=10**6))
+    
 # This took ~10mins to load a 3GB+ file (10**8 rows) into the DB.
+
+PS: postgres works with lowercase database and table names only.
+Ensure that you don't use uppercase or special characters.
 ```
