@@ -1278,6 +1278,7 @@ def psql_insert_copy(table, conn, keys, data_iter):
     
 # This took ~10mins to load a 3GB+ file (10**8 rows) into the DB.
 
-PS: postgres works with lowercase database and table names only.
-Ensure that you don't use uppercase or special characters.
+# PS: 
+# Postgres works with lowercase database and table names only.
+# Ensure that you don't use uppercase or special characters.
 ```
