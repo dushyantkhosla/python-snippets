@@ -1199,7 +1199,9 @@ docker pull postgres
 # see: https://docs.docker.com/samples/library/postgres/
 # options: POSTGRES_USER (default: postgres), POSTGRES_DB (default: postgres), PGDATA (to defined a directory for database files)
 docker run --rm -d --name psql \
-                   -e POSTGRES_PASSWORD=pg_docker_01 \
+		   -e POSTGRES_USER=dkhosla \
+                   -e POSTGRES_PASSWORD=xxxxxxxx \
+		   -e POSTGRES_DB=default \
 		   -p 5432:5432 \
 		   -v $(PWD):/var/lib/postgresql/data \
 		   postgres
@@ -1207,13 +1209,29 @@ docker run --rm -d --name psql \
 # Requirements
 pip install pandas==0.24.2
 pip install psycopg2-binary
+pip install sqlalchemy sqlalchemy-utils
 ```
 - Then, in Python 
 
 ```python
-# Connect to the DB
 from sqlalchemy import create_engine
-engine = create_engine("postgresql://postgres:pg_docker_01@localhost:5432/postgres")
+from sqlalchemy_utils import create_database, database_exists
+
+POSTGRES_USER = 'dkhosla'
+POSTGRES_PASSWORD = 'xxxxxxxx'
+HOST = 'localhost'
+PORT = 5432
+POSTGRES_DB = 'default'
+
+# Connect to the default DB 
+engine = create_engine(f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/{POSTGRES_DB}")
+
+# Create more databases if needed
+str_connection = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/data_raw"
+
+if not database_exists(str_connection):
+    create_database(str_connection)
+    engine_2 = create_engine(str_connection)
 
 # Read data from text files, load into DB
 df = pd.read_csv(...)
