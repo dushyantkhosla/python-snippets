@@ -1282,3 +1282,11 @@ def psql_insert_copy(table, conn, keys, data_iter):
 # Postgres works with lowercase database and table names only.
 # Ensure that you don't use uppercase or special characters.
 ```
+
+## Print numbers as f-strings with thousands separators 
+
+```python
+num = 10000000
+print(f"{num:,d}")
+# 10,000,000
+```
