@@ -1304,6 +1304,7 @@ my_df.to_sql('table_name', con=engine, if_exists='append', index=False)
 
 # Drop a table
 engine.execute("DROP TABLE <table_name>")
+```
 
 ## Print numbers as f-strings with thousands separators 
 
