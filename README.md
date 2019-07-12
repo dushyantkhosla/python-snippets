@@ -1282,6 +1282,28 @@ def psql_insert_copy(table, conn, keys, data_iter):
 # Postgres works with lowercase database and table names only.
 # Ensure that you don't use uppercase or special characters.
 ```
+Useful functions - 
+
+```python
+# Check if database exists
+database_exists(str_connection)
+
+# List tables in a database
+engine.table_names()
+
+# Create table
+engine.execute("""
+CREATE TABLE test_1 (
+    col_1 SERIAL PRIMARY KEY, 
+    col_2 VARCHAR(255)
+)
+""")
+
+# Insert values from a DataFrame in a table
+my_df.to_sql('table_name', con=engine, if_exists='append', index=False)
+
+# Drop a table
+engine.execute("DROP TABLE <table_name>")
 
 ## Print numbers as f-strings with thousands separators 
 
