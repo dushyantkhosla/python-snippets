@@ -1224,14 +1224,15 @@ PORT = 5432
 POSTGRES_DB = 'default'
 
 # Connect to the default DB 
-engine = create_engine(f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/{POSTGRES_DB}")
+str_connection_1 = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/{POSTGRES_DB}"
+engine = create_engine(str_connection_1)
 
 # Create more databases if needed
-str_connection = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/data_raw"
+str_connection_2 = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/data_raw"
 
-if not database_exists(str_connection):
-    create_database(str_connection)
-    engine_2 = create_engine(str_connection)
+if not database_exists(str_connection_2):
+    create_database(str_connection_2)
+    engine_2 = create_engine(str_connection_2)
 
 # Read data from text files, load into DB
 df = pd.read_csv(...)
