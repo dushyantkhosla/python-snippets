@@ -1318,6 +1318,9 @@ print(f"{num:,d}")
 ## Get Project Root Directory path from any Python file
 
 ```python
+import os
+import sys
+
 # Location of file being executed
 absFilePath = os.path.abspath(__file__)
 print(absFilePath)
@@ -1329,4 +1332,7 @@ print(fileDir)
 # Two levels up 
 parentDir = os.path.dirname(fileDir)
 print(parentDir)
+
+# Now, add the module you need to PYTHONPATH for easy imports
+sys.path.append(parentDir)
 ```
