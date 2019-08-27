@@ -1314,3 +1314,19 @@ num = 10000000
 print(f"{num:,d}")
 # 10,000,000
 ```
+
+## Get Project Root Directory path from any Python file
+
+```python
+# Location of file being executed
+absFilePath = os.path.abspath(__file__)
+print(absFilePath)
+
+# Go up one level with os.path.dirname
+fileDir = os.path.dirname(os.path.abspath(__file__))
+print(fileDir)
+
+# Two levels up 
+parentDir = os.path.dirname(fileDir)
+print(parentDir)
+```
