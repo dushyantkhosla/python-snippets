@@ -960,7 +960,7 @@ python -m ipykernel install --user
 
 ```python
 # Example 1
-from data class import dataclass, asdict, astuple, replace, field
+from dataclasses import dataclass, asdict, astuple, replace, field
 @dataclass
 class Color:
 	hue: int
