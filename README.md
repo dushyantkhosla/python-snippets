@@ -1217,18 +1217,20 @@ pip install sqlalchemy sqlalchemy-utils
 from sqlalchemy import create_engine
 from sqlalchemy_utils import create_database, database_exists
 
-POSTGRES_USER = 'dkhosla'
-POSTGRES_PASSWORD = 'xxxxxxxx'
-HOST = 'localhost'
-PORT = 5432
-POSTGRES_DB = 'default'
+config = {
+    'POSTGRES_USER': 'dkhosla',
+    'POSTGRES_PASSWORD': 'xxxxxxxx',
+    'HOST': 'localhost',
+    'PORT': 5432,
+    'POSTGRES_DB': 'default',
+}
 
 # Connect to the default DB 
-str_connection_1 = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/{POSTGRES_DB}"
+str_connection_1 = "postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/{POSTGRES_DB}".format(**config)
 engine = create_engine(str_connection_1)
 
 # Create more databases if needed
-str_connection_2 = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/data_raw"
+str_connection_2 = "postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/data_raw".format(**config)
 
 if not database_exists(str_connection_2):
     create_database(str_connection_2)
