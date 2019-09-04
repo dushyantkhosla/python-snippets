@@ -1338,3 +1338,9 @@ print(parentDir)
 # Now, add the module you need to PYTHONPATH for easy imports
 sys.path.append(parentDir)
 ```
+
+## Number Formats for DataFrames
+
+```python
+df.style.format('${0:,.2f}')
+```
