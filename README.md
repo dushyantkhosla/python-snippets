@@ -1342,5 +1342,26 @@ sys.path.append(parentDir)
 ## Number Formats for DataFrames
 
 ```python
-df.style.format('${0:,.2f}')
+df['amount'].style.format('${0:,.2f}')
+
+# Different styles for each column
+format_dict = {'sum':'${0:,.0f}', 
+	       'date': '{:%m-%Y}', 
+	       'pct_of_total': '{:.2%}'}
+	       
+df.style.format(format_dict).hide_index()
+
+# Highlight numbers
+(df
+ .style
+ .format(format_dict)
+ .hide_index()
+ .highlight_max(color='lightgreen')
+ .highlight_min(color='#cd4f39'))
+ 
+ # Excel-like Conditional Formats
+ (df
+ .style
+ .format(format_dict)
+ .background_gradient(subset=['sum'], cmap='BuGn'))
 ```
