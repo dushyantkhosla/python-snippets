@@ -1365,3 +1365,9 @@ df.style.format(format_dict).hide_index()
  .format(format_dict)
  .background_gradient(subset=['sum'], cmap='BuGn'))
 ```
+
+## Install 3rd Party Software on Mac OS
+
+```bash
+sudo spctl --master-disable
+```
