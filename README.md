@@ -1371,3 +1371,20 @@ df.style.format(format_dict).hide_index()
 ```bash
 sudo spctl --master-disable
 ```
+
+## List of tables in a Sqlite DB as pandas Series
+
+```python
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect("my.db")
+
+srs_tables = \
+pd.Series([i[0] for i in 
+           (conn
+            .cursor()
+            .execute("SELECT name FROM sqlite_master WHERE type='table';")
+            .fetchall())
+          ])
+```
