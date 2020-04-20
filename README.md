@@ -1388,3 +1388,17 @@ pd.Series([i[0] for i in
             .fetchall())
           ])
 ```
+
+## Translate all special characters to underscores
+
+- Useful when cleaning up column names
+
+```python
+import string
+
+# create translation table
+tr_punctuation_to_underscores = str.maketrans(string.punctuation, "_" * len(string.punctuation))
+
+# apply to column names
+pd.Series(df.columns).map(lambda i: i.translate(tr_punctuation_to_underscores))
+```
