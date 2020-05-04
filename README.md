@@ -1402,3 +1402,52 @@ tr_punctuation_to_underscores = str.maketrans(string.punctuation, "_" * len(stri
 # apply to column names
 pd.Series(df.columns).map(lambda i: i.translate(tr_punctuation_to_underscores))
 ```
+
+## Visualize data in 2-dimensions using PCA, TSNE, Isomap
+
+- Useful especially in classification problems 
+- Helps in understanding 
+	- if the classes are separable
+	- what the decision boundary would look like (and hence whether a linear or non-linear kernel is appropriate)
+- In the examples below, 
+	- X_scaled is the array of independent variables (with outliers removed and standardization done.)
+	- y is the dependent variable (category labels)
+
+```python
+from sklearn.decomposition import PCA
+from sklearn.manifold import Isomap, TSNE
+
+# 1. Principal Components Analysis
+
+pca = PCA(n_components=2)
+pca.fit(X_scaled)
+evr = pca.explained_variance_ratio_.sum().round(2)
+
+(pd.DataFrame(
+    data=pca.transform(X_scaled), 
+    columns=['Comp_1', 'Comp_2'])
+ .plot.scatter(x='Comp_1', 
+               y='Comp_2', 
+               c=[i for i in y],
+               title=f'\nExplained Variance: {evr:.0%}\n'));
+
+# 2 - Isomap
+
+iso = Isomap(n_components=2)
+(pd.DataFrame(data=iso.fit_transform(X_scaled), 
+           columns=['Comp_1', 'Comp_2'])
+ .plot
+ .scatter(x='Comp_1', 
+          y='Comp_2', 
+          c=[i for i in y]))
+
+# 3 - TSNE
+
+tsne = TSNE(n_components=2)
+(pd.DataFrame(tsne.fit_transform(X_scaled), 
+              columns=['Comp_1', 'Comp_2'])
+ .plot
+ .scatter(x='Comp_1', 
+          y='Comp_2', 
+          c=[i for i in y]));
+```
