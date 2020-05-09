@@ -1451,3 +1451,16 @@ tsne = TSNE(n_components=2)
           y='Comp_2', 
           c=[i for i in y]));
 ```
+
+## Write DataFrames as Excel Files
+
+```python
+# create the xlsx
+df_1.to_excel(f"{path_to_data}/Output/Predictions.xlsx", sheet_name='input')
+
+# adding sheets
+with pd.ExcelWriter(f"{path_to_data}/Output/Predictions.xlsx", mode='a') as writer:
+        df_2.to_excel(writer, sheet_name='intermediate')
+	df_3.to_excel(writer, sheet_name='output')
+```
+- Browse https://xlsxwriter.readthedocs.io/examples.html for conditional formatting, inserting images etc.
