@@ -1464,3 +1464,37 @@ with pd.ExcelWriter(f"{path_to_data}/Output/Predictions.xlsx", mode='a') as writ
 	df_3.to_excel(writer, sheet_name='output')
 ```
 - Browse https://xlsxwriter.readthedocs.io/examples.html for conditional formatting, inserting images etc.
+
+## IPywidets "Play" for animation
+
+```python
+import numpy as np
+import pandas as pd
+from ipywidgets import interactive, Play
+
+df = pd.concat([
+    pd.Series(np.random.random(size=1000), name=str(i)) 
+    for i in range(1965, 2011)
+], axis=1)
+
+play = Play(
+    interval=700,
+    value=1965,
+    min=1965,
+    max=2010,
+    step=1,
+    description="Press play",
+    disabled=False
+)
+
+def f(year):
+    """
+    Plot histogram of data for `year`
+    """
+    (df
+     .loc[:, str(year)]
+     .plot
+     .hist(bins=20, title=f"For {year}", figsize=(8, 5), ylim=(0, 100)))
+
+interactive(f, year=play)
+```
