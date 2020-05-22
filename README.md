@@ -1516,7 +1516,7 @@ conda install -y -c conda-forge jupyterlab seaborn altair statsmodels scikit-lea
 conda install -y -c conda-forge ipykernel flake8 autopep8
 
 # Install Atom packages
-apm install hydrogen platformio-ide-terminal atom-file-icons minimap autocomplete-python-jedi
+apm install hydrogen platformio-ide-terminal atom-file-icons minimap autocomplete-python-jedi linter linter-flake8 python-autopep8
 
 # Activate ipykernel
 python -m ipykernel install --user
