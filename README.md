@@ -1510,7 +1510,7 @@ interactive(f, year=play)
 ```bash
 # Create conda env, install dependencies
 conda update -n base -c defaults conda
-conda create -y -n atom-pyds python=3
+conda create -y -n atom-pyds python=3.6
 conda activate atom-pyds
 conda install -y -c conda-forge jupyterlab seaborn altair statsmodels scikit-learn ipywidgets xlrd graphviz
 conda install -y -c conda-forge ipykernel flake8 autopep8
@@ -1524,6 +1524,8 @@ python -m ipykernel install --user
 # Launch Atom (from activated env)
 atom .
 ```
+
+Note: Jedi works with python=3.6 by default. If your env has 3.7 or 3.8, check [this](https://stackoverflow.com/questions/44602603/atom-ide-autocomplete-python-not-working) for a fix.
 
 ## Remove Atom
 
