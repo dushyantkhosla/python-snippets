@@ -1501,7 +1501,7 @@ interactive(f, year=play)
 
 ## Setting up Atom for DS Development
 
-1. Install Atom from https://atom.io/
+1. Install Atom from https://atom.io/ (Unzip, move app to Applications, run it once)
 2. Run `which atom` to confirm you have `apm` installed (Atom Package Manager)
 3. Create a conda environment
 4. Activate ipykernel
@@ -1510,12 +1510,13 @@ interactive(f, year=play)
 ```bash
 # Create conda env, install dependencies
 conda update -n base -c defaults conda
-conda create -n atom-pyds python=3
+conda create -y -n atom-pyds python=3
 conda activate atom-pyds
+conda install -y -c conda-forge jupyterlab seaborn altair statsmodels scikit-learn ipywidgets xlrd graphviz
 conda install -y -c conda-forge ipykernel flake8 autopep8
 
 # Install Atom packages
-apm install hydrogen platformio-ide-terminal atom-file-icons minimap autocomplete-python linter linter-flake8 python-autopep8 python-indent
+apm install hydrogen platformio-ide-terminal atom-file-icons minimap autocomplete-python-jedi
 
 # Activate ipykernel
 python -m ipykernel install --user
