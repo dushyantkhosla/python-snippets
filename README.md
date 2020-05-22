@@ -1498,3 +1498,45 @@ def f(year):
 
 interactive(f, year=play)
 ```
+
+## Setting up Atom for DS Development
+
+1. Install Atom from https://atom.io/
+2. Run `which atom` to confirm you have `apm` installed (Atom Package Manager)
+3. Create a conda environment
+4. Activate ipykernel
+5. Launch Atom
+
+```bash
+# Create conda env, install dependencies
+conda update -n base -c defaults conda
+conda create -n atom-pyds python=3
+conda activate atom-pyds
+conda install -y -c conda-forge ipykernel flake8 autopep8
+
+# Install Atom packages
+apm install hydrogen platformio-ide-terminal atom-file-icons minimap autocomplete-python linter linter-flake8 python-autopep8 python-indent
+
+# Activate ipykernel
+python -m ipykernel install --user
+
+# Launch Atom (from activated env)
+atom .
+```
+
+## Remove Atom
+
+Put the following commands in a bash script and run it.
+
+```bash
+rm -rf ~/.atom
+rm -rf /usr/local/bin/atom
+rm -rf /usr/local/bin/apm
+rm -rf /Applications/Atom.app
+rm -rf ~/Library/Preferences/com.github.atom.plist
+rm -rf "~/Library/Application Support/com.github.atom.ShipIt"
+rm -rf "~/Library/Application Support/Atom"
+rm -rf "~/Library/Saved Application State/com.github.atom.savedState"
+rm -rf ~/Library/Caches/com.github.atom
+rm -rf ~/Library/Caches/Atom
+```
