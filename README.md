@@ -1546,3 +1546,18 @@ rm -rf ~/Library/Caches/Atom
 ## `UnicodeDecodeError` in Pandas' `read_csv`
 
 If you're seeing an error s.a. `'utf-8' codec can't decode byte xxxx in position yy`, try using `engine='python'` instead of the default `engine='c'`.
+
+## `ModuleNotFound` errors in Jupyter
+
+- You've installed a new package from within the notebook, and from the terminal
+- It shows up in `pip list` and `conda list`
+- Yet, inside the notebook, module cannot be found?
+- CAUSE: Notebook started with the wrong kernel.
+- TEST: Run `sys.executable` and check if you're using the right environment.
+- FIX: Run
+
+```bash
+conda activate my-env
+python -m ipykernel install --name my-new-kernel
+```
+- Select `my-new-kernel` from the dropdown in Jupyter
