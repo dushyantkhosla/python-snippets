@@ -1545,7 +1545,13 @@ rm -rf ~/Library/Caches/Atom
 ```
 ## `UnicodeDecodeError` in Pandas' `read_csv`
 
-If you're seeing an error s.a. `'utf-8' codec can't decode byte xxxx in position yy`, try using `engine='python'` instead of the default `engine='c'`.
+- Errors s.a. `'utf-8' codec can't decode byte xxxx in position yy`, 
+- Cause: non-Latin characters in file
+- Solution: 
+	- Use `engine='python'` instead of the default `engine='c'`
+	- Use appropriate encoding from https://docs.python.org/2.4/lib/standard-encodings.html
+	- For example, `encoding="iso8859_7"` for Greek
+	- Finally, use `transliterate.translit(str, reversed=True)`  
 
 ## `ModuleNotFound` errors in Jupyter
 
@@ -1561,3 +1567,4 @@ conda activate my-env
 python -m ipykernel install --name my-new-kernel
 ```
 - Select `my-new-kernel` from the dropdown in Jupyter
+
