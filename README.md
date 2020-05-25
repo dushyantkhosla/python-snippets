@@ -1543,3 +1543,6 @@ rm -rf "~/Library/Saved Application State/com.github.atom.savedState"
 rm -rf ~/Library/Caches/com.github.atom
 rm -rf ~/Library/Caches/Atom
 ```
+## `UnicodeDecodeError` in Pandas' `read_csv`
+
+If you're seeing an error s.a. `'utf-8' codec can't decode byte xxxx in position yy`, try using `engine='python'` instead of the default `engine='c'`.
