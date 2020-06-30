@@ -1568,3 +1568,58 @@ python -m ipykernel install --name my-new-kernel
 ```
 - Select `my-new-kernel` from the dropdown in Jupyter
 
+## Correlation between categoricals
+
+```python
+# 1. Chi-squared
+# --------------
+from itertools import product
+from scipy.stats import chi2_contingency
+import pandas as pd
+
+list_categoricals = df.select_dtypes(include=object).columns.tolist()
+
+def get_chi2(a, b, df):
+    """
+    """
+    obs = pd.crosstab(df.loc[:, a], df.loc[:, b])
+    chi2, pval, _, _ = chi2_contingency(observed=obs)
+    return chi2, pval
+
+df_chi2 = \
+pd.DataFrame([
+    (i,j, *run_chi2(i,j)) 
+    for i, j in product(list_categoricals, 
+                        list_categoricals)
+    if i != j
+], columns=['col_1', 'col_2', 'chi2', 'pvals'])
+
+# 2. Cramer's V
+# --------------
+def get_cramers_v(a, b, df):
+    """
+    Returns Cramer's V for given pd.Series
+    """
+    x, y = df.loc[:, a], df.loc[:, b] 
+    confusion_matrix = pd.crosstab(x,y)
+    
+    chi2 = chi2_contingency(confusion_matrix)[0]
+    n = confusion_matrix.sum().sum()
+    phi2 = chi2/n
+    r,k = confusion_matrix.shape
+    phi2corr = max(0, phi2-((k-1)*(r-1))/(n-1))
+    rcorr = r-((r-1)**2)/(n-1)
+    kcorr = k-((k-1)**2)/(n-1)
+    
+    cramers_v = np.sqrt(phi2corr/min((kcorr-1),(rcorr-1)))
+    
+    return cramers_v
+
+df_cramers_v = \
+pd.DataFrame([
+    (i,j, get_cramers_v(i,j, df=df))
+    for i, j in product(list_categoricals, 
+                        list_categoricals)
+    if i != j
+], columns=['col_1', 'col_2', 'cramers_v'])
+```
