@@ -41,7 +41,7 @@ def autoPCA(df, threshold=0.85, lookup=[40, 60, 80, 100], clip=True, clip_at=0.9
 
     if clip == True:
         print("Clipping at the {}th Percentile to control outliers...".format(clip_at * 100))
-        df = df.apply(lambda x: x.clip_upper(x.quantile(clip_at)))
+        df = df.apply(lambda x: x.clip(upper=x.quantile(clip_at)))
 
     t0 = time.time()
     print("\nRunning PCA for different values of n_components provided...")
