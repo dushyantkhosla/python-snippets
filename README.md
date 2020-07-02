@@ -957,6 +957,7 @@ python -m ipykernel install --user
 	- mutable (and hence unhashable)
 	- unordered
 	- but, these defaults can be overridden using the `frozen` and `order` params
+- Read more [here](https://realpython.com/python-data-classes)
 
 ```python
 # Example 1
