@@ -223,6 +223,9 @@ shutil.move(src, dst)
 ```Python
 import datetime
 str(datetime.datetime.now().date())
+
+# or
+pd.Timestamp.today()
 ```
 
 
