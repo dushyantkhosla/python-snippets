@@ -921,7 +921,7 @@ alias cact='function _f0(){conda activate $1;};_f0'
 
 alias cdeac='conda deactivate'
 
-alias jlab='function _f1(){jupyter lab --no-browser --port=$1 &> /dev/null & ;};_f1'
+alias jlab='function _f1(){nohup jupyter lab --no-browser --allow-root --ip "*" --port $1 &;};_f1'
 # usage: jlab 8800
 
 alias jnl='jupyter notebook list'
