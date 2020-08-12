@@ -1627,3 +1627,18 @@ pd.DataFrame([
     if i != j
 ], columns=['col_1', 'col_2', 'cramers_v'])
 ```
+
+## Read all sheets of an Excel workbook into a dict of DataFrames
+
+```python
+import pandas as pd
+import xlrd
+
+str_path_to_excel_file = 'home/dir/data/workbook.xlsx'
+
+# Read all sheets using sheet_name=None, and capture their names
+list_sheet_names = list(pd.read_excel(str_path_to_excel_file, sheet_name=None).keys())
+
+# Read the sheets you want into a dict of dfs
+dict_dfs = pd.read_excel(str_path_to_excel_file, sheet_name=list_sheet_names[1:])
+```
