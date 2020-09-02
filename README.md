@@ -1642,3 +1642,16 @@ list_sheet_names = list(pd.read_excel(str_path_to_excel_file, sheet_name=None).k
 # Read the sheets you want into a dict of dfs
 dict_dfs = pd.read_excel(str_path_to_excel_file, sheet_name=list_sheet_names[1:])
 ```
+
+## Password-less SSH access to remote machines
+
+```bash
+# If you don't already have a public key, create it
+ssh-keygen -t rsa -C "USER@EMAIL"
+
+# Copy it to the remote machine 
+cat ~/.ssh/id_rsa.pub | ssh USER@REMOTE.MACHINE 'cat >> ~/.ssh/authorized_keys'
+
+# SSH into the remote machine without needing to use a password
+ssh USER@REMOTE.MACHINE
+```
