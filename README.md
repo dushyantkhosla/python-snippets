@@ -1655,3 +1655,31 @@ cat ~/.ssh/id_rsa.pub | ssh USER@REMOTE.MACHINE 'cat >> ~/.ssh/authorized_keys'
 # SSH into the remote machine without needing to use a password
 ssh USER@REMOTE.MACHINE
 ```
+
+## Sample `docker-compose` script for DS
+
+- Contents of `docker-compose.yml`
+
+```bash
+---
+version: '3'
+services:
+  ds-dev:
+    container_name: dev-x
+    image: dushyantkhosla/py38-ds-dev:latest
+    ports:
+      - "9000:9000"
+    restart: on-failure
+    network_mode: "host"
+    tty: true
+    volumes:
+      - /dir-on-host-0:/dir-in-container-0
+      - /dir-on-host-1:/dir-in-container-1
+```
+
+Then, 
+
+- Start the container with `docker-compose up -d`
+- Attach to the running container `docker exec -it dev-x /bin/zsh`
+- Start Jupyter `nohup jupyter lab --no-browser --allow-root --ip "*" --port 9000 &`
+- Get the token `jupyter notebook list`
