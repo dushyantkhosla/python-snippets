@@ -1683,3 +1683,35 @@ Then,
 - Attach to the running container `docker exec -it dev-x /bin/zsh`
 - Start Jupyter `nohup jupyter lab --no-browser --allow-root --ip "*" --port 9000 &`
 - Get the token `jupyter notebook list`
+
+## Convert FLAC to MP3 using `ffmpeg` and `multiprocessing`
+
+```python
+from pathlib import Path
+import subprocess
+from multiprocessing import Pool, cpu_count
+
+
+path_to_dirs = "/FLACs/"
+path_to_dest = "/FLACs-to-MP3s/"
+
+list_paths_flacs = [x for x in Path(f"{path_to_dirs}").glob(f"**/*.flac")]
+
+def convert_flac_to_mp3(path_flac):
+    """
+    """
+    path_dest_dir = Path(path_flac.parent.as_posix().replace(path_to_dirs, path_to_dest)) 
+    try:
+        if not path_dest_dir.exists():
+            path_dest_dir.mkdir(parents=True)
+        else:
+            pass
+        file_mp3 = path_flac.as_posix().replace(path_to_dirs, path_to_dest).replace(".flac", ".mp3")
+        subprocess.call(['ffmpeg', '-i', path_flac.as_posix(), '-ab', '320k', '-id3v2_version', '3', file_mp3])
+    except:
+        print(f"Failed for {path_flac.as_posix()}")
+
+with Pool(cpu_count()) as p:
+    p.map(convert_flac_to_mp3,
+          list_paths_flacs)
+```
