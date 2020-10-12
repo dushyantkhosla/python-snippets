@@ -1718,6 +1718,8 @@ with Pool(cpu_count()) as p:
 
 ## Sync files on local and remote machine with `rsync`
 
+- [Reference](https://dev.to/zakiarsyad/rsync-vs-scp-1jfp)
+
 ```bash
 # man rsync
 # Syntax: rsync OPTIONS SOURCE DESTINATION
