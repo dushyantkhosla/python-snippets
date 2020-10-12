@@ -1715,3 +1715,18 @@ with Pool(cpu_count()) as p:
     p.map(convert_flac_to_mp3,
           list_paths_flacs)
 ```
+
+## Sync files on local and remote machine with `rsync`
+
+```bash
+# man rsync
+# Syntax: rsync OPTIONS SOURCE DESTINATION
+# -r = recursive
+# -v = verbose
+# -h = human-readable
+# --progress
+# --update = only transfer missing or newer files
+
+# Example:
+rsync -rvh --progress --update /home/user/path-to-local-dir ubuntu@192.168.1.5:/home/ubuntu/path-to-remote-dir
+```
