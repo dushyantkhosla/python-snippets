@@ -888,7 +888,10 @@ def format_plot(ax):
 
 ```
 # Get thousands separator 
-ax.set_yticklabels(['{:,}'.format(int(x)) for x in ax.get_yticks().tolist()])
+ax.set_yticklabels([f'{x:,}' for x in ax.get_yticks().tolist()])
+
+# Format as %
+ax.set_xticklabels([f'{x:.0%}' for x in ax.get_xticks().tolist()])
 ```
 
 ## Store pwd as hidden file, get it on clipboard
