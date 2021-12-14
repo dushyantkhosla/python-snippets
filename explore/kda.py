@@ -87,7 +87,7 @@ def find_key_drivers(X, y):
     return var_imps
 
 
-def find_key_driversCV(X, y, xCOLS, CV=5):
+def run_key_driversCV(X, y, xCOLS, CV=5):
     """
     Run the find_key_drivers function over subsets of the data
     Average over the results to find robust best predictors
