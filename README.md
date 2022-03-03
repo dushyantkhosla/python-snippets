@@ -1735,3 +1735,18 @@ with Pool(cpu_count()) as p:
 # Example:
 rsync -rvh --progress --update /home/user/path-to-local-dir ubuntu@192.168.1.5:/home/ubuntu/path-to-remote-dir
 ```
+
+## Add data labels to Matplotlib Barchart
+
+```python
+ax = df[col].value_counts(normalize=True).plot.barh()
+
+[ax.text(x=p.get_width() * 1.05, 
+         y=p.get_y(), 
+         s=f"{p.get_width():.0%}", 
+         va='bottom', 
+         ha='left', 
+         fontdict={'size': 12, 'name': 'monospace', 'weight': 'bold'},) 
+ for p 
+ in ax.patches]
+```
