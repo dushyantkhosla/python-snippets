@@ -1751,7 +1751,16 @@ ax = df[col].value_counts(normalize=True).plot.barh()
  in ax.patches]
 ```
 
-## `pyspark` on local with parquet files through SQL
+## Easy `pyspark` on local using Docker, Parquet Files and SQL
+
+First,
+
+```bash
+docker pull jupyter/pyspark-notebook
+docker run -it -p 8010:8010 -v /path/to/projects/project_x:/home/jovyan/work/project_x jupyter/pyspark-notebook
+```
+
+Then,
 
 ```python
 from pyspark.sql import SparkSession
