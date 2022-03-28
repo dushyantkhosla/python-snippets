@@ -1750,3 +1750,43 @@ ax = df[col].value_counts(normalize=True).plot.barh()
  for p 
  in ax.patches]
 ```
+
+## `pyspark` on local with parquet files through SQL
+
+```python
+from pyspark.sql import SparkSession
+
+session = (SparkSession
+           .builder
+           .master("local")
+           .appName("myapp")
+           .getOrCreate())
+	   
+list_parquets = [x for x in os.listdir(path_data_raw) if x.endswith('parquet')]
+
+print(f"Creating Temporary Views: ")
+
+for i, pq in enumerate(list_parquets):
+    session.read.parquet(f"{path_data_parquet}/{pq}").createOrReplaceTempView(f"table_{i}")
+    
+df_1 = \
+(session.sql(f"""
+SELECT 
+    TBL1.col_1,
+    TBL1.col_2,
+    TBL2.col_3,
+    TBL2.col_4,
+    TBL3.col_5,
+    TBL4.col_6
+FROM       table_1 TBL1    
+LEFT JOIN  table_2 TBL2 ON (TBL1.pkey = TBL2.pkey)
+LEFT JOIN  table_3 TBL3 ON (TBL1.pkey = TBL3.pkey) 
+WHERE 1=1
+AND clause_1
+AND clause_2
+""")
+ .toPandas()
+ .drop_duplicates())
+```
+
+
