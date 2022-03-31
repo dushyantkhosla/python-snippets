@@ -1798,4 +1798,15 @@ AND clause_2
  .drop_duplicates())
 ```
 
+## Easy execute time in JupyterLab (without extensions)
 
+```python
+try:
+    %load_ext autotime
+except:
+    !pip install ipython-autotime
+    %load_ext autotime
+
+# To stop cell timing, use:
+%unload_ext autotime
+```
