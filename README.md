@@ -1775,8 +1775,8 @@ list_parquets = [x for x in os.listdir(path_data_raw) if x.endswith('parquet')]
 
 print(f"Creating Temporary Views: ")
 
-for i, pq in enumerate(list_parquets):
-    session.read.parquet(f"{path_data_parquet}/{pq}").createOrReplaceTempView(f"table_{i}")
+for pq in list_parquets:
+    session.read.parquet(f"file:///{path_data_parquet}/{pq}").createOrReplaceTempView(f"table_{pq.split('.')[0]}")
     
 df_1 = \
 (session.sql(f"""
