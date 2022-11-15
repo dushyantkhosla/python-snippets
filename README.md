@@ -1810,3 +1810,71 @@ except:
 # To stop cell timing, use:
 %unload_ext autotime
 ```
+## Make Publication Quality Barplots with Confidence Intervals
+
+```python
+def make_barplot(data, x, y, ci, ylabel, title, fig_size=(15, 7), kwargs=None, xlimit=1, srs_y=srs_y, show_table=True):
+    """
+    fig_size = tuple, controls the width, height of the chart
+    kwargs   = dict,  optional for `hue` and `palette`
+    srs_y    = pd.Series, to calculate population mean and plot vline
+    show_table = bool, display or hide counts + percentages
+    """
+    list_order = \
+    (data
+     .groupby(y)
+     .apply(lambda grp: grp.loc[:, x].mean())
+     .sort_values()
+     .index.tolist()[::-1])
+    
+    if show_table:
+        display(data
+                .stb.freq([y])
+                .assign(percent = lambda fr: fr['percent'].divide(100))
+                .set_index(y)
+                .loc[:, ['count', 'percent']]
+                .rename(columns={'count': '# LAU', 'percent': '% LAU'})
+                .join(data.groupby(y)[x].mean().rename('% Reached'))
+                .applymap(lambda i: f"{i:.2%}" if i < 1 else f"{int(i):,d}"))
+    
+    _, ax = plt.subplots(figsize=fig_size)
+
+    sns.barplot(data=data,
+                x=x, 
+                y=y, 
+                palette=kwargs['palette'] if ((kwargs is not None) and (kwargs['palette'] is not None)) else 'pastel',
+                alpha=0.8,
+                order=list_order,
+                ax=ax,
+                hue=kwargs['hue'] if ((kwargs is not None) and (kwargs['hue'] is not None)) else None,
+                ci=ci if ci is not None else None
+               )
+
+    ax.set_xlim(0, xlimit)
+    ax.set_xticklabels([f'{x:.0%}' for x in ax.get_xticks().tolist()])
+    ax.set_xlabel("% Reached")
+
+    ax.set_ylabel(ylabel)
+
+    ax.set_title(title)
+
+    ax.vlines(x=srs_y.mean(), 
+              ymin=data[y].nunique(), 
+              ymax=-1, 
+              colors='grey', 
+              linestyles='dashed')
+
+    [ax.text(
+        x=p.get_width() * 1.02, 
+        y=p.get_y() * 1.1, 
+        s=f"{p.get_width():.1%}", 
+        va='top', 
+        ha='left', 
+        fontdict={'size': 12, 'name': 'monospace', 'weight': 'bold'}) 
+     for p 
+     in ax.patches]
+    
+    ax.annotate(text=f'Mean\n{srs_y.mean():.1%}', xy=(1.02 * srs_y.mean(), -0.75), fontsize=10)
+
+    format_plot(ax)
+```
