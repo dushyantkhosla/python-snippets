@@ -1813,20 +1813,16 @@ except:
 ## Make Publication Quality Barplots with Confidence Intervals
 
 ```python
-def make_barplot(data, x, y, ci, ylabel, title, fig_size=(15, 7), kwargs=None, xlimit=1, srs_y=srs_y, show_table=True):
+def make_barplot(data, x, y, ci, ylabel, title, fig_size=(15, 7), palette=None, hue=None, xlimit=1, srs_y=None, show_table=True, sort_order='values', single_color=None):
     """
     fig_size = tuple, controls the width, height of the chart
     kwargs   = dict,  optional for `hue` and `palette`
     srs_y    = pd.Series, to calculate population mean and plot vline
     show_table = bool, display or hide counts + percentages
     """
-    list_order = \
-    (data
-     .groupby(y)
-     .apply(lambda grp: grp.loc[:, x].mean())
-     .sort_values()
-     .index.tolist()[::-1])
-    
+    srs_x = data.groupby(y)[x].mean()
+    list_order = srs_x.sort_values().index.tolist()[::-1] if sort_order == 'values' else srs_x.sort_index().index.tolist()[::-1]
+        
     if show_table:
         display(data
                 .stb.freq([y])
@@ -1842,17 +1838,18 @@ def make_barplot(data, x, y, ci, ylabel, title, fig_size=(15, 7), kwargs=None, x
     sns.barplot(data=data,
                 x=x, 
                 y=y, 
-                palette=kwargs['palette'] if ((kwargs is not None) and (kwargs['palette'] is not None)) else 'pastel',
+                palette=palette if palette is not None else None,
+                color=single_color if single_color is not None else None,
                 alpha=0.8,
                 order=list_order,
                 ax=ax,
-                hue=kwargs['hue'] if ((kwargs is not None) and (kwargs['hue'] is not None)) else None,
+                hue=hue if hue is not None else None,
                 ci=ci if ci is not None else None
                )
 
     ax.set_xlim(0, xlimit)
     ax.set_xticklabels([f'{x:.0%}' for x in ax.get_xticks().tolist()])
-    ax.set_xlabel("% Reached")
+    ax.set_xlabel("% Adoption Index")
 
     ax.set_ylabel(ylabel)
 
