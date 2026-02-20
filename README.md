@@ -1875,3 +1875,11 @@ def make_barplot(data, x, y, ci, ylabel, title, fig_size=(15, 7), palette=None, 
 
     format_plot(ax)
 ```
+
+
+## Remove consecutive duplicates from a sequence
+
+```python
+from itertools import groupby
+[key for key, _ in groupby(seq)]
+```
