@@ -279,8 +279,11 @@ YouTubeVideo('link-to-video')
 # by columns
 df.style.background_gradient(cmap='Greens')
 
-# by rows
-df.style.background_gradient(cmap='Greens', axis=1)
+# by rows, show as floats
+df.style.format("{:.1f}")background_gradient(cmap='Greens', axis=1)
+
+# show as percentages
+df.style.format("{:.0%}").background_gradient(cmap="Greens", axis=1)
 ```
 
 
