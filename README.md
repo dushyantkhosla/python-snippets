@@ -1886,3 +1886,22 @@ def make_barplot(data, x, y, ci, ylabel, title, fig_size=(15, 7), palette=None, 
 from itertools import groupby
 [key for key, _ in groupby(seq)]
 ```
+
+## LMStudio - Start server, load model from Python module
+
+```python
+import subprocess
+import lmstudio
+
+models_available = [x.model_key for x in lms.list_downloaded_models()]
+LM_STUDIO_MODEL = "..."
+
+r = subprocess.run(
+    "lms server status".split(), capture_output=True, text=True, check=True
+)
+if r.stderr.strip() != "The server is running on port 1234.":
+    subprocess.run("lms server start".split(), capture_output=True)
+    if LM_STUDIO_MODEL not in [x.identifier for x in lms.list_loaded_models()]:
+        client = lms.get_default_client()
+        m = client.llm.load_new_instance(LM_STUDIO_MODEL)
+```
