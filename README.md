@@ -1905,3 +1905,33 @@ if r.stderr.strip() != "The server is running on port 1234.":
         client = lms.get_default_client()
         m = client.llm.load_new_instance(LM_STUDIO_MODEL)
 ```
+
+## Pydantic AI Structured Output with LMStudio (thinking: off)
+
+```python
+from pydantic import BaseModel
+from pydantic_ai import Agent, ModelSettings
+from pydantic_ai.models.openai import OpenAIChatModel
+from pydantic_ai.providers.openai import OpenAIProvider
+
+class YearRequirement(BaseModel):
+    context: str  # e.g. "managerial experience", "total"
+    years: float
+
+class JDExtraction(BaseModel):
+    required_skills: list[str]  # tools, technologies, domain competencies
+    year_requirements: list[YearRequirement]
+
+agent: Agent = Agent(
+	model=OpenAIChatModel(LM_STUDIO_MODEL, provider=OpenAIProvider(base_url=LM_STUDIO_URL, api_key="lm-studio")),
+	model_settings=ModelSettings(thinking=False, extra_body={"chat_template_kwargs": {"enable_thinking": False}},),
+	output_type=JDExtraction,
+	instructions=(
+		"You are a precise HR analyst. Extract structured requirements from job descriptions. "
+		"For required_skills: include specific tools, technologies, methodologies, and domain "
+		"Return only what is explicitly stated — do not infer."
+	),
+)
+
+result = agent.run_sync(f"Job title: {title}\n\nDescription:\n{description}")
+```
