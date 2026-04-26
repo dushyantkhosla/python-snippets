@@ -1971,6 +1971,10 @@ except UnexpectedModelBehavior as exc:
 
 ## Get a list of currently free models on OpenRouter
 
+- release date in the last 9 months
+- run this script with :: `uv run openrouter-free-models.py`
+- add your `OPENROUTER_API_KEY` to `~/.bashrc` or `~/.zshrc`
+
 ```python
 # /// script
 # requires-python = ">=3.11"
@@ -1979,9 +1983,6 @@ except UnexpectedModelBehavior as exc:
 #   "pandas",
 # ]
 # ///
-
-# Run this script with :: uv run openrouter-free-models.py
-
 import os
 
 import pandas as pd
@@ -2000,7 +2001,6 @@ df = pd.json_normalize(data)
 date_begin = str(
     (pd.Timestamp.now() - pd.DateOffset(months=9) - pd.offsets.MonthBegin(1)).date()
 )
-
 
 model_ids = (
     df[["id", "context_length", "created", "expiration_date"]]
