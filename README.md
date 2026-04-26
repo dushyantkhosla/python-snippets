@@ -1935,3 +1935,36 @@ agent: Agent = Agent(
 
 result = agent.run_sync(f"Job title: {title}\n\nDescription:\n{description}")
 ```
+
+## Use free cloud models for testing AI applications
+
+```python
+import os
+import json
+from dotenv import find_dotenv, load_dotenv
+
+from pydantic_ai import Agent, ModelSettings
+from pydantic_ai.models.openai import OpenAIChatModel
+from pydantic_ai.providers.openai import OpenAIProvider
+from pydantic_ai.exceptions import UnexpectedModelBehavior
+
+load_dotenv(find_dotenv())
+
+agent = Agent(
+    model=OpenAIChatModel(
+        os.getenv["KILO_MODEL_FREE"],
+        provider=OpenAIProvider(
+			base_url=os.environ["KILO_BASE_URL"],
+			api_key=os.getenv["KILO_API_KEY"]
+		),
+    ),
+    model_settings=ModelSettings(thinking=False, extra_body={"chat_template_kwargs": {"enable_thinking": False}}),
+    retries=3,
+	output_type=PYDANTIC_MODEL,
+	instructions=SYSTEM_PROMPT,
+)
+try:
+	result = agent.run_sync(USER_PROMPT).output
+except UnexpectedModelBehavior as exc:
+	raise RuntimeError(f"Model run failed: {exc}") from exc
+```
