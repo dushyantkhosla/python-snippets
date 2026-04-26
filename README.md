@@ -1968,3 +1968,48 @@ try:
 except UnexpectedModelBehavior as exc:
 	raise RuntimeError(f"Model run failed: {exc}") from exc
 ```
+
+## Get a list of currently free models on OpenRouter
+
+```python
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "requests",
+#   "pandas",
+# ]
+# ///
+
+# Run this script with :: uv run openrouter-free-models.py
+
+import os
+
+import pandas as pd
+import requests
+
+api_key = os.getenv("OPENROUTER_API_KEY")
+
+url = "https://openrouter.ai/api/v1/models"
+headers = {"Authorization": f"Bearer {api_key}"}
+
+response = requests.get(url, headers=headers)
+data = response.json()["data"]
+
+df = pd.json_normalize(data)
+
+date_begin = str(
+    (pd.Timestamp.now() - pd.DateOffset(months=9) - pd.offsets.MonthBegin(1)).date()
+)
+
+
+model_ids = (
+    df[["id", "context_length", "created", "expiration_date"]]
+    .assign(flag_free=lambda x: x["id"].str.contains("free"))
+    .assign(created=lambda x: pd.to_datetime(x["created"], unit="s"))
+    .query(f"flag_free == True & created >= '{date_begin}' & context_length >= 100_000 & id != 'openrouter/free'")
+    .reset_index()
+    .loc[:, "id"]
+)
+
+print(model_ids)
+```
