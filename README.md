@@ -2013,3 +2013,15 @@ model_ids = (
 
 print(model_ids)
 ```
+
+## Free models on Openrouter / Kilo Gateway using bash/zsh functions
+
+```bash
+free_models_kilo() {
+    python -c "import requests;r = requests.get('https://api.kilo.ai/api/gateway/models');[print(d['id']) for d in r.json()['data'] if d['isFree']]"
+}
+
+free_models_openrouter() {
+    python -c "import requests;r = requests.get('https://openrouter.ai/api/v1/models');[print(d['id']) for d in r.json()['data'] if d['id'].endswith('free')]"
+}
+```
