@@ -2025,3 +2025,67 @@ free_models_openrouter() {
     python -c "import requests;r = requests.get('https://openrouter.ai/api/v1/models');[print(d['id']) for d in r.json()['data'] if d['id'].endswith('free')]"
 }
 ```
+## Get current pricing for paid models on Openrouter / Kilo
+
+```python
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "requests",
+#   "pandas",
+# 	"tabulate"
+# ]
+# ///
+
+# modelprices.py
+import sys
+
+import pandas as pd
+import requests
+
+r = requests.get("https://openrouter.ai/api/v1/models")
+
+df = (
+    pd.DataFrame(
+        {
+            d["id"]: d["pricing"]
+            for d in r.json()["data"]
+            if not d["id"].endswith("free")
+        }
+    )
+    .T.loc[:, ["prompt", "completion"]]
+    .astype(float)
+    .multiply(10**6)
+    .round(2)
+    .rename(columns=lambda i: i + "_USD_per_mtok")
+    .join(
+        pd.Series({d["id"]: d["created"] for d in r.json()["data"]}, name="created")
+        .pipe(pd.to_datetime, unit="s")
+        .dt.date
+    )
+    .sort_values("created", ascending=False)
+    .rename_axis(index="model")
+)
+
+model_string = sys.argv[1] if len(sys.argv) > 1 else "deepseek"
+
+print(df.loc[[i for i in df.index if model_string in i]].to_markdown())
+```
+
+- Add this as a bash function
+
+```bash
+modelprices() {
+	uv run scripts/modelprices.py "$@"
+}
+```
+
+- Use on your Terminal
+
+```bash
+$ modelprices deepseek-v4
+| model                      |   prompt_USD_per_mtok |   completion_USD_per_mtok | created    |
+|:---------------------------|----------------------:|--------------------------:|:-----------|
+| deepseek/deepseek-v4-pro   |                  0.44 |                      0.87 | 2026-04-24 |
+| deepseek/deepseek-v4-flash |                  0.14 |                      0.28 | 2026-04-24 |
+```
