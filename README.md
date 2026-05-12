@@ -2089,3 +2089,15 @@ $ modelprices deepseek-v4
 | deepseek/deepseek-v4-pro   |                  0.44 |                      0.87 | 2026-04-24 |
 | deepseek/deepseek-v4-flash |                  0.14 |                      0.28 | 2026-04-24 |
 ```
+
+
+## Find the project's root directory from any module
+
+```python
+import os
+from pathlib import Path
+
+root = os.getcwd()
+while root.split('/')[-1] != "MyProject":
+    root = f"{Path(root).parent}"
+```
